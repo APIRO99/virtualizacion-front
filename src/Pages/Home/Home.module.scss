@@ -1,0 +1,25 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.maxwidth {
+  width: 100%;
+}
+
+.separatorMargin {
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.image {
+  width: 350px;
+  height: 350px;
+  border-radius: 25px;
+  margin: auto !important;
+}

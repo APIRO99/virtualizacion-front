@@ -1,0 +1,22 @@
+.songsContainer {
+  width: 100%;
+  max-width: 1920px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.titleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 26px;
+  margin-bottom: 20px;
+}

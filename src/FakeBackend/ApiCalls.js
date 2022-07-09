@@ -1,16 +1,39 @@
-export const getSongs = () => {
+window.db = { };
+
+export const getRecomendations = (imageSrc) => {
+  console.log(imageSrc);
   return new Promise((res) => {
-    res([
-      "0VzBKgimNRMauaqzT2rEnS",
-      "0ct6r3EGTcMLPtrXHDvVjc",
-      "1dm6z1fWB0cErMszU25dy2",
-      // "5TclgAYTVdTRLnHvTUhyIP",
-      // "46pBDlSgGAsZ42ufBX9KAh",
-      // "2QjOHCTQ1Jl3zawyYOpxh6",
-      // "6y6jbcPG4Yn3Du4moXaenr",
-      // "3Wrjm47oTz2sjIgck11l5e",
-      // "2bL2gyO6kBdLkNSkxXNh6x",
-      // "69kOkLUCkxIZYexIgSG8rq",
-    ])
+    res({
+      "statusCode": 200,
+      "body": {
+          "id": [
+              "3pBv3LfvfPft2TqHleqKHo",
+              "2LxdNADWier3MKTei8FbOY",
+              "2BqIdDEwf8bHH0JuwS9j4O",
+              "4RAR8g8fZNB106ezUurnE0",
+              "4peF3yGZAZfeOFDahi6Ig5",
+              "4R4gOp9ybG85RqbrY7JELc",
+              "3ng7epefERNazaZkkbwLdq",
+              "6oYXbji1rn7U6bFuNYekpQ",
+              "4KqA0GwEKbc96WyfIZn3SV",
+              "7KTcpv7wPJ4r6lR5SLzurh"
+          ]
+      },
+      "RecomendationEmotion": "HAPPY"
+  })
+  })
+}
+
+export const saveRecomendations = ({ id, data }) => {
+  return new Promise((res) => {
+    if (!window.db[id]) window.db[id] = [...data]
+    else window.db[id].push(...data)
+    res()
+  })
+}
+
+export const getHistory = (id) => {
+  return new Promise((res) => {
+    res(window.db[id])
   })
 }

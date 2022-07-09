@@ -1,11 +1,15 @@
-.songsContainer {
-  width: 100%;
-  max-width: 1920px;
-  height: auto;
-  background: red;
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
 
+.video {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.buttons {
+
+}
