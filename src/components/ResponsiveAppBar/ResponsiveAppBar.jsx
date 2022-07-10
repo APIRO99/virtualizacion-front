@@ -16,6 +16,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
+import styles from './ResponsiveAppBar.module.scss'
+
 const pages = ['home', 'history'];
 const settings = ['Logout'];
 
@@ -34,6 +36,7 @@ const ResponsiveAppBar = () => {
 
   const handleCloseNavMenu = (ev, page) => {
     setAnchorElNav(null);
+    if(page === "backdropClick") return;
     navigate(`/${page}`);
   };
 
@@ -46,64 +49,11 @@ const ResponsiveAppBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-
           <DesktopLogo />
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={(ev) => handleCloseNavMenu(ev, page)}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-
+          <MobilePages data={{handleOpenNavMenu, anchorElNav, handleCloseNavMenu, pages}} />
           <MobileLogo />
-          
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={(ev) => handleCloseNavMenu(ev, page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-
-          <UserData data={{ handleOpenUserMenu, anchorElUser, handleCloseUserMenu, settings }}/>
-
-
+          <DesktopPages data={{handleCloseNavMenu, pages}}/>
+          <UserData data={{ handleOpenUserMenu, anchorElUser, handleCloseUserMenu, settings, user }}/>
         </Toolbar>
       </Container>
     </AppBar>
@@ -161,15 +111,76 @@ let MobileLogo = () => (
   </>
 );
 
+let MobilePages = ({data}) => {
+  let { handleOpenNavMenu, anchorElNav, handleCloseNavMenu, pages } = data;
+  return (
+    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+      <IconButton
+        size="large"
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        onClick={handleOpenNavMenu}
+        color="inherit"
+      >
+        <MenuIcon />
+      </IconButton>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorElNav}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        open={Boolean(anchorElNav)}
+        onClose={handleCloseNavMenu}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+        }}
+      >
+        {pages.map((page) => (
+          <MenuItem key={page} onClick={(ev) => handleCloseNavMenu(ev, page)}>
+            <Typography textAlign="center">{page}</Typography>
+          </MenuItem>
+        ))}
+      </Menu>
+    </Box>
+  )
+}
+
+let DesktopPages = ({data}) => {
+  let { handleCloseNavMenu, pages } = data;
+  return (
+    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+      {pages.map((page) => (
+        <Button
+          key={page}
+          onClick={(ev) => handleCloseNavMenu(ev, page)}
+          sx={{ my: 2, color: 'white', display: 'block' }}
+        >
+          {page}
+        </Button>
+      ))}
+    </Box>
+  )
+}
 
 let UserData = ({ data }) => {
-  let { handleOpenUserMenu, anchorElUser, handleCloseUserMenu, settings } = data;
+  let { handleOpenUserMenu, anchorElUser, handleCloseUserMenu, settings, user } = data;
   return (
     <>
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            <div className={styles.userIcon}>
+              <p>{user.attributes.email[0].toUpperCase()}</p>
+            </div>
+            {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
           </IconButton>
         </Tooltip>
         <Menu
@@ -198,9 +209,5 @@ let UserData = ({ data }) => {
     </>
   );
 }
-
-
-
-
 
 export default ResponsiveAppBar;

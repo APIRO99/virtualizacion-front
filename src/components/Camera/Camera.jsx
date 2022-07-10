@@ -20,8 +20,8 @@ const requestAccessCamera = () => {
 
 
 const Camera = ({handleImage}) => {
-  const width = 400;
-  const height = 400;
+  const width = 600;
+  const height = 600;
   const facingMode = 'user';
   const videoConstraints = { width, height, facingMode };
 

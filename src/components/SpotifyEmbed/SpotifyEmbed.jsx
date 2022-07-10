@@ -7,7 +7,8 @@ const SpotifyEmbed = ({id}) => {
       title={id}
       style={{
         borderRadius: "12px",
-        margin: 30
+        margin: 30,
+        boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px"
       }}
       src={src}
       width="320"

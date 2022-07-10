@@ -5,7 +5,6 @@ import '@aws-amplify/ui-react/styles.css';
 const userContext = createContext({ })
 
 function Auth({ signOut, user, children }) {
-  console.log(user);
   return (
     <userContext.Provider value={{user, signOut }}>
       {children}

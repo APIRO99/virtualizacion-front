@@ -1,9 +1,14 @@
+const PHOTO_API = "https://8833fms1w6.execute-api.us-east-1.amazonaws.com/v1/upload";
+const DB_API= "https://8833fms1w6.execute-api.us-east-1.amazonaws.com/v1/transaction";
+
+
+
 export const getRecomendations = async (imageSrc) => {
   var headers = new Headers();
   headers.append("Content-Type", "application/json");
 
   var body = JSON.stringify({
-    name: "reactTest.png",
+    name: "reactTest2.png",
     content: imageSrc.slice(23)
   })
   
@@ -14,33 +19,16 @@ export const getRecomendations = async (imageSrc) => {
     headers, body
   };
 
-  // return new Promise((res) => {
-  //   res({
-  //     songs: [
-  //       "3pBv3LfvfPft2TqHleqKHo",
-  //       "2LxdNADWier3MKTei8FbOY",
-  //       "2BqIdDEwf8bHH0JuwS9j4O",
-  //       "4RAR8g8fZNB106ezUurnE0",
-  //       "4peF3yGZAZfeOFDahi6Ig5",
-  //       "4R4gOp9ybG85RqbrY7JELc",
-  //       "3ng7epefERNazaZkkbwLdq",
-  //       "6oYXbji1rn7U6bFuNYekpQ",
-  //       "4KqA0GwEKbc96WyfIZn3SV",
-  //       "7KTcpv7wPJ4r6lR5SLzurh"
-  //     ],
-  //     "emotion": "HAPPY"
-  //   })
-  // })
-
-  return fetch("https://d1xk0jbrvg.execute-api.us-east-1.amazonaws.com/v1/upload", requestOptions)
+  return fetch(PHOTO_API, requestOptions)
     .then(res => res.json())
     .then(data => {
+      console.log(data);
       if (data.errorType) {
         // return no faces found
       }
       return { 
         songs: data?.body?.id || [],
-        emotion: data.RecomendationEmotion,
+        emotion: data.Emotions,
       }
     })
     .catch(error => console.log('error', error));
@@ -64,7 +52,7 @@ export const saveRecomendations = async ({ id, data }) => {
   };
 
   console.log(requestOptions)
-  return fetch("https://3ewnpbip4f.execute-api.us-east-1.amazonaws.com/Dev/transaction", requestOptions)
+  return fetch(DB_API, requestOptions)
     .then(res => res.text())
     .then(data => {
       console.log(data);
@@ -91,7 +79,7 @@ export const getHistory = async (id) => {
     headers, body
   };
 
-  return fetch("https://3ewnpbip4f.execute-api.us-east-1.amazonaws.com/Dev/transaction", requestOptions)
+  return fetch(DB_API, requestOptions)
     .then(res => res.json())
     .then(data => {
       console.log(data);
@@ -99,17 +87,3 @@ export const getHistory = async (id) => {
     })
     .catch(error => console.log('error', error));
 }
-
-// export const saveRecomendations = ({ id, data }) => {
-//   return new Promise((res) => {
-//     if (!window.db[id]) window.db[id] = [...data]
-//     else window.db[id].push(...data)
-//     res()
-//   })
-// }
-
-// export const getHistory = (id) => {
-//   return new Promise((res) => {
-//     res(window.db[id])
-//   })
-// }

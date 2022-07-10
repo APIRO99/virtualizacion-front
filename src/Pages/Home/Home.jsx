@@ -44,16 +44,23 @@ const Home = () => {
 let Header = ({ user }) => (
   <>
     {/* <Heading className={styles.separatorMargin} level={1}>Hello {user.attributes.email}</Heading> */}
-    <Heading className={styles.separatorMargin} level={4}>To start with the recomendations we need a picture first :)</Heading>
+    <Heading className={um([styles.separatorMargin, styles.title])} level={4}>To start with the recomendations we need a picture first :)</Heading>
     {/* <Button onClick={signOut}>Sign out</Button> */}
   </>
 );
 
 let PicturControls = ({ setImageSrc, imageSrc }) => {
+  let popUpStyle = {
+    width: "80%",
+    maxWidth: "400px",
+    maxHeight: "600px"
+  }
   return (
     <>
       <div className={um([styles.buttons, styles.separatorMargin])}>
-        <Popup trigger={<Button>Camera</Button>} modal>
+        <Popup 
+          contentStyle={popUpStyle}
+          trigger={<Button>Camera</Button>} modal>
           <Camera handleImage={setImageSrc}/>
         </Popup>
         <Button>
