@@ -23,6 +23,7 @@ const Home = () => {
   let handleSubmit = async () => {
     getRecomendations(imageSrc)
     .then(({songs, emotion }) => {
+      if(songs.length === 0) return;
       setRecomendations(songs);
       setEmotion(emotion);
       saveRecomendations({id: user.username, data: songs});
@@ -44,7 +45,7 @@ const Home = () => {
 let Header = ({ user }) => (
   <>
     {/* <Heading className={styles.separatorMargin} level={1}>Hello {user.attributes.email}</Heading> */}
-    <Heading className={um([styles.separatorMargin, styles.title])} level={4}>To start with the recomendations we need a picture first :)</Heading>
+    <Heading className={um([styles.separatorMargin, styles.title])} level={4}>To start with the recomendations we need a picture first 😊</Heading>
     {/* <Button onClick={signOut}>Sign out</Button> */}
   </>
 );

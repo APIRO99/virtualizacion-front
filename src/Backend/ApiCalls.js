@@ -1,15 +1,18 @@
 const PHOTO_API = "https://8833fms1w6.execute-api.us-east-1.amazonaws.com/v1/upload";
 const DB_API= "https://8833fms1w6.execute-api.us-east-1.amazonaws.com/v1/transaction";
+const API_KEY= "";
 
 
 
 export const getRecomendations = async (imageSrc) => {
   var headers = new Headers();
   headers.append("Content-Type", "application/json");
+  // headers.append("Authorization", API_KEY);
 
   var body = JSON.stringify({
     name: "reactTest2.png",
-    content: imageSrc.slice(23)
+    content: imageSrc.slice(23),
+    number: Math.floor(Math.random() * 10)
   })
   
   var requestOptions = {
@@ -22,16 +25,18 @@ export const getRecomendations = async (imageSrc) => {
   return fetch(PHOTO_API, requestOptions)
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if (data.errorType) {
-        // return no faces found
+        return ({songs: [], emotion:undefined })
       }
       return { 
         songs: data?.body?.id || [],
         emotion: data.Emotions,
       }
     })
-    .catch(error => console.log('error', error));
+    .catch(error => { 
+      console.log('error', error)
+      return ({songs: [], emotion:undefined })
+    });
 }
 
 export const saveRecomendations = async ({ id, data }) => {
